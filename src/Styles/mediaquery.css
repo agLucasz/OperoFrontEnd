@@ -1,0 +1,113 @@
+/* mediaquery.css */
+
+/* Tablet and smaller notebooks (max-width: 1366px) */
+@media screen and (max-width: 1366px) {
+    /* Adjust grid columns for dashboard cards */
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+    }
+
+    .standard-page-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+    }
+
+    .standard-page-card {
+        padding: 24px;
+        min-height: 220px;
+    }
+
+    .standard-form-container {
+        width: 95%;
+        padding: 24px;
+    }
+
+    .standard-list-table-wrapper {
+        width: 95%;
+    }
+
+    .standard-list-search {
+        width: 90%;
+    }
+}
+
+/* Notebooks/Tablets portrait (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+    /* Sidebar adjustments */
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+
+    /* Dashboard adjustments */
+    .dashboard-metrics {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    /* Standard pages adjustments */
+    .standard-page-cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .standard-form-container {
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    .standard-list-table-wrapper {
+        width: 100%;
+    }
+
+    .standard-list-search {
+        width: 100%;
+    }
+
+    /* Font size adjustments */
+    .standard-page-header h2 {
+        font-size: 24px;
+    }
+
+    .standard-form-header h2 {
+        font-size: 22px;
+    }
+
+    .standard-list-header h2 {
+        font-size: 22px;
+    }
+
+    .standard-list-table th,
+    .standard-list-table td {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Specific component adjustments for 1024px */
+@media screen and (max-width: 1024px) {
+    .dashboard-header {
+        padding: 20px !important;
+    }
+
+    .dashboard-content {
+        padding: 20px !important;
+    }
+
+    .standard-form-group input {
+        width: 90%;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+}

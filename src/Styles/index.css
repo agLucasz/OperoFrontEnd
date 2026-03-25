@@ -1,0 +1,706 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+ --font: 'Poppins', sans-serif;
+ --background: #eeeeeed3;
+ --blue: #256bbb;
+ --blue-light: #5e80a7;
+ --green: #1f8f4d;
+ --red: #c0392b;
+ --white: #ffffff;
+ --shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font);
+    background-color: var(--background);
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+a{
+    text-decoration: none;
+    color: var(--blue);
+}
+
+.notify-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    pointer-events: none;
+    z-index: 9999;
+}
+.notify-item{
+    margin: 0 auto;
+    width: min(800px, 92%);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--white);
+    box-shadow: var(--shadow);
+    pointer-events: auto;
+    font-weight: 500;
+}
+.notify-success{
+    background: linear-gradient(135deg, var(--green), #2ecc71);
+}
+.notify-error{
+    background: linear-gradient(135deg, var(--red), #e74c3c);
+}
+.notify-close{
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 6px;
+    line-height: 1;
+}
+
+#root {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#root .form-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 24px;
+    max-width: 1200px;
+}
+
+.list-container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.search-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.search-icon {
+    color: #999;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.items-table th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 1;
+    padding: 12px 16px;
+    border-bottom: 2px solid #dee2e6;
+    text-align: left;
+    font-weight: 600;
+}
+
+.items-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-delete {
+    color: #dc3545;
+}
+
+.btn-delete:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-0 {
+    background: #e3f2fd;
+    color: #0d6efd;
+}
+
+.status-1 {
+    background: #d1e7dd;
+    color: #198754;
+}
+
+.status-2 {
+    background: #f8d7da;
+    color: #dc3545;
+}
+
+.os-container {
+    padding: 24px;
+}
+
+.os-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.os-option-card {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.os-option-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.07);
+}
+
+.os-option-icon {
+    margin-bottom: 16px;
+    color: var(--blue);
+}
+
+.os-option-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.os-option-description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.sub-page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.back-button {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.back-button:hover {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+/* ==========================================================================
+   PADRÃO: Telas Iniciais de Gestão (Home Views)
+   Usado nas telas principais que têm as opções "Cadastrar" e "Listar"
+   ========================================================================== */
+.standard-page-container {
+    padding: 24px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.standard-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-shrink: 0;
+}
+
+.standard-page-header h2 {
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.standard-page-header p {
+    color: #666;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+.standard-page-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+    overflow-y: auto;
+    padding-bottom: 24px;
+    flex-grow: 1;
+    align-content: start;
+}
+
+.standard-page-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    min-height: 250px;
+    height: auto;
+}
+
+.standard-page-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--blue);
+}
+
+.standard-page-card-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #eff6ff;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.standard-page-card:hover .standard-page-card-icon {
+    background: var(--blue);
+    color: white;
+}
+
+.standard-page-card-title {
+    color: #1a1a1a;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.standard-page-card-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.standard-sub-page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.standard-back-button {
+    background: #f3f4f6;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    color: #4b5563;
+    transition: all 0.2s ease;
+}
+
+.standard-back-button:hover {
+    background: #e5e7eb;
+    color: #111827;
+}
+  /* Usado em: Categoria Despesa, Despesa, Forma Pagamento, Categoria Produto
+   ========================================================================== */
+.standard-form-container {
+    width: 100%;
+    max-width: 100vh;
+    margin: 20px auto;
+    background: var(--white);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f3f4f6;
+    overflow-y: auto;
+    flex-shrink: 0;
+    max-height: calc(100vh - 180px);
+}
+
+.standard-form-header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.standard-form-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.standard-form-header p {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.standard-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.standard-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.standard-form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.standard-form-group input {
+    margin: 0 auto;
+    width: 70%;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 2px solid #e5e7eb;
+    font-size: 16px;
+    color: #1f2937;
+    background-color: #f9fafb;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.standard-form-group input:focus {
+    border-color: var(--blue);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(37, 107, 187, 0.1);
+}
+
+.standard-form-group input::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+.standard-form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.standard-form-actions .btn-primary,
+.standard-form-actions .btn-secondary {
+    padding: 8px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 180px;
+}
+
+.standard-form-actions .btn-primary {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.standard-form-actions .btn-primary:hover {
+    background-color: var(--blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 107, 187, 0.2);
+}
+
+.standard-form-actions .btn-secondary {
+    background-color: transparent;
+    color: #4b5563;
+    border: 2px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.standard-form-actions .btn-secondary:hover {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #1f2937;
+}
+
+/* ==========================================================================
+   PADRÃO: Listagem de Campo Único (Single Field Lists)
+   Usado em: Categoria Despesa, Despesa, Forma Pagamento, Categoria Produto
+   ========================================================================== */
+.standard-list-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: var(--white);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f3f4f6;
+    height: fit-content;
+    max-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+}
+
+.standard-list-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.standard-list-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.standard-list-search {
+    display: flex;
+    align-items: center;
+    background-color: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0 16px;
+    margin: 0 auto 32px auto;
+    width: 80%;
+    transition: all 0.2s ease;
+}
+
+.standard-list-search:focus-within {
+    border-color: var(--blue);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(37, 107, 187, 0.1);
+}
+
+.standard-list-search input {
+    width: 100%;
+    padding: 16px 12px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #1f2937;
+    outline: none;
+}
+
+.standard-list-search input::placeholder {
+    color: #9ca3af;
+}
+
+.standard-list-search svg {
+    color: #9ca3af;
+    font-size: 20px;
+}
+
+.standard-list-table-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    max-height: calc(100vh - 350px);
+}
+
+.standard-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+}
+
+.standard-list-table th {
+    background-color: #f9fafb;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.standard-list-table td {
+    padding: 16px 20px;
+    font-size: 16px;
+    color: #4b5563;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+}
+
+.standard-list-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.standard-list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.standard-list-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.standard-list-actions button {
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: #6b7280;
+}
+
+.standard-list-actions button:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.standard-list-actions button.delete {
+    color: #ef4444;
+}
+
+.standard-list-actions button.delete:hover {
+    background-color: #fee2e2;
+}
+
+.standard-list-actions button.edit {
+    color: #0284c7;
+}
+
+.standard-list-actions button.edit:hover {
+    background-color: #e0f2fe;
+}
+
+/* Utils e Estados para as Listagens Padrão */
+.standard-list-loading {
+    text-align: center;
+    padding: 60px;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.standard-list-empty {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    border: 1px dashed #e0e0e0;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.standard-list-table-empty {
+    text-align: center;
+    padding: 32px;
+    color: #6b7280;
+}
+
+.standard-view-field {
+    padding: 12px 16px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 16px;
+    color: #1f2937;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.standard-list-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.standard-margin-top {
+    margin-top: 16px;
+}
