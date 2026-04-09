@@ -1,0 +1,214 @@
+/* ===========================
+   ENTRADA ESTOQUE STYLES
+   =========================== */
+
+.estoque-form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 32px 24px;
+}
+
+.estoque-form-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 40px 48px;
+    width: 100%;
+    max-width: 640px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Field groups */
+.estoque-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.estoque-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.estoque-row {
+    display: flex;
+    gap: 20px;
+}
+
+/* Input */
+.estoque-input {
+    padding: 13px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: var(--font);
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: white;
+    width: 100%;
+}
+
+.estoque-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 107, 187, 0.1);
+}
+
+/* Search */
+.estoque-search-row {
+    display: flex;
+    gap: 8px;
+}
+
+.estoque-search-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0 14px;
+    background: white;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.estoque-search-box:focus-within {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 107, 187, 0.1);
+}
+
+.estoque-search-icon {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.estoque-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-family: var(--font);
+    color: #111827;
+    padding: 13px 0;
+    background: transparent;
+}
+
+.estoque-search-input::placeholder {
+    color: #9ca3af;
+}
+
+.estoque-search-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 13px 18px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.estoque-search-btn:hover {
+    background: #1a5499;
+}
+
+/* Produto selecionado */
+.estoque-produto-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 16px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+}
+
+.estoque-produto-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #065f46;
+}
+
+.estoque-produto-change {
+    background: none;
+    border: none;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    padding: 0;
+    flex-shrink: 0;
+    text-decoration: underline;
+}
+
+.estoque-produto-change:hover {
+    color: #1a5499;
+}
+
+/* Submit button */
+.estoque-btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font);
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(37, 107, 187, 0.25);
+    margin-top: 4px;
+}
+
+.estoque-btn-submit:hover:not(:disabled) {
+    background: #1a5499;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(37, 107, 187, 0.3);
+}
+
+.estoque-btn-submit:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.estoque-btn-submit:disabled {
+    background: #9ca3af;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ---- Lista ---- */
+.estoque-qty-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 999px;
+}

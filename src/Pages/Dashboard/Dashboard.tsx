@@ -1,7 +1,11 @@
 import '../../Styles/Dashboard/dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { FiHome, FiUsers, FiTruck, FiLogOut, FiHexagon, FiTag, FiCreditCard, FiBriefcase, FiPackage, FiTool, FiChevronDown, FiDollarSign } from 'react-icons/fi';
+import {
+  FiHome, FiUsers, FiTruck, FiLogOut, FiHexagon, FiTag, FiCreditCard,
+  FiBriefcase, FiPackage, FiTool, FiChevronDown, FiDollarSign,
+  FiShoppingCart, FiTrendingUp
+} from 'react-icons/fi';
 import Cliente from '../Cliente/Cliente';
 import Fornecedor from '../Fornecedor/Fornecedor';
 import Despesa from '../Despesa/Despesa';
@@ -14,14 +18,22 @@ import OrdemServico from '../OrdemServico/OrdemServico/OrdemServico';
 import Produto from '../Produto/Produto/Produto';
 import ContaPagar from '../Financeiro/ContaPagar/ContaPagar';
 import ContaReceber from '../Financeiro/ContaReceber/ContaReceber';
+import Venda from '../Venda/Venda';
+import EntradaEstoque from '../EntradaEstoque/EntradaEstoque';
 import DashboardHome from './DashboardHome';
 
 function Dashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [cadastrosOpen, setCadastrosOpen] = useState(true);
-  const [financeiroOpen, setFinanceiroOpen] = useState(true);
-  const [servicosOpen, setServicosOpen] = useState(true);
+
+  // Sidebar group states
+  const [cadastrosOpen, setCadastrosOpen] = useState(false);
+  const [produtosOpen, setProdutosOpen] = useState(false);
+  const [despesaOpen, setDespesaOpen] = useState(false);
+  const [financeiroOpen, setFinanceiroOpen] = useState(false);
+  const [servicosOpen, setServicosOpen] = useState(false);
+  const [movimentacoesOpen, setMovimentacoesOpen] = useState(false);
+
   const [userName, setUserName] = useState('Usuário');
 
   useEffect(() => {
@@ -29,13 +41,11 @@ function Dashboard() {
         const token = localStorage.getItem('token');
         if (token) {
             const payload = token.split('.')[1];
-            // Decode base64url
             const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
             const decoded = JSON.parse(window.atob(base64));
-            // In ASP.NET Core, the name claim is usually http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name or unique_name
-            const name = decoded.name || 
-                         decoded.unique_name || 
-                         decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] || 
+            const name = decoded.name ||
+                         decoded.unique_name ||
+                         decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ||
                          'Usuário';
             setUserName(name);
         }
@@ -48,6 +58,29 @@ function Dashboard() {
     localStorage.removeItem('token');
     navigate('/login', { replace: true });
   };
+
+  const link = (tab: string, label: string, icon: React.ReactNode) => (
+    <a
+      className={`sidebar-link ${activeTab === tab ? 'active' : ''}`}
+      onClick={(e) => { e.preventDefault(); setActiveTab(tab); }}
+      href="#"
+    >
+      {icon}
+      {label}
+    </a>
+  );
+
+  const sectionTitle = (label: string, isOpen: boolean, toggle: () => void) => (
+    <div
+      className={`sidebar-section-title ${isOpen ? 'open' : ''}`}
+      onClick={toggle}
+      role="button"
+      aria-expanded={isOpen}
+    >
+      {label}
+      <FiChevronDown size={14} className="chevron" />
+    </div>
+  );
 
   return (
     <div className="dashboard-layout">
@@ -63,164 +96,56 @@ function Dashboard() {
         </div>
 
         <nav className="sidebar-menu">
-          <a
-            className={`sidebar-link ${activeTab === 'dashboard' ? 'active' : ''}`}
-            onClick={(e) => { e.preventDefault(); setActiveTab('dashboard'); }}
-            href="#"
-          >
-            <FiHome size={18} />
-            Dashboard
-          </a>
+          {link('dashboard', 'Dashboard', <FiHome size={18} />)}
 
-          <div
-            className={`sidebar-section-title ${cadastrosOpen ? 'open' : ''}`}
-            onClick={() => setCadastrosOpen(!cadastrosOpen)}
-            role="button"
-            aria-expanded={cadastrosOpen}
-          >
-            Cadastros
-            <FiChevronDown size={14} className="chevron" />
-          </div>
-
+          {/* ── Cadastros ── */}
+          {sectionTitle('Cadastros', cadastrosOpen, () => setCadastrosOpen(!cadastrosOpen))}
           <div className={`sidebar-group ${cadastrosOpen ? 'open' : 'closed'}`}>
-            <a
-              className={`sidebar-link ${activeTab === 'clientes' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('clientes'); }}
-              href="#"
-            >
-              <FiUsers size={18} />
-              Clientes
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'fornecedores' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('fornecedores'); }}
-              href="#"
-            >
-              <FiTruck size={18} />
-              Fornecedores
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'servicos' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('servicos'); }}
-              href="#"
-            >
-              <FiBriefcase size={18} />
-              Serviços
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'categoriaproduto' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('categoriaproduto'); }}
-              href="#"
-            >
-              <FiTag size={18} />
-              Categoria Produto
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'produtos' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('produtos'); }}
-              href="#"
-            >
-              <FiPackage size={18} />
-              Produtos
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'formapagamento' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('formapagamento'); }}
-              href="#"
-            >
-              <FiCreditCard size={18} />
-              Formas de Pagamento
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'despesas' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('despesas'); }}
-              href="#"
-            >
-              <FiTag size={18} />
-              Despesas
-            </a>
-
-            <a
-              className={`sidebar-link ${activeTab === 'categoriadespesa' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('categoriadespesa'); }}
-              href="#"
-            >
-              <FiTag size={18} />
-              Categorias Despesa
-            </a>
+            {link('clientes', 'Clientes', <FiUsers size={18} />)}
+            {link('fornecedores', 'Fornecedores', <FiTruck size={18} />)}
+            {link('formapagamento', 'Formas de Pagamento', <FiCreditCard size={18} />)}
+            {link('servicos', 'Serviços', <FiBriefcase size={18} />)}
           </div>
 
-          <div
-            className={`sidebar-section-title ${financeiroOpen ? 'open' : ''}`}
-            onClick={() => setFinanceiroOpen(!financeiroOpen)}
-            role="button"
-            aria-expanded={financeiroOpen}
-          >
-            Financeiro
-            <FiChevronDown size={14} className="chevron" />
+          {/* ── Produtos ── */}
+          {sectionTitle('Produtos', produtosOpen, () => setProdutosOpen(!produtosOpen))}
+          <div className={`sidebar-group ${produtosOpen ? 'open' : 'closed'}`}>
+            {link('produtos', 'Produtos', <FiPackage size={18} />)}
+            {link('categoriaproduto', 'Categorias de Produto', <FiTag size={18} />)}
           </div>
 
+          {/* ── Despesas ── */}
+          {sectionTitle('Despesas', despesaOpen, () => setDespesaOpen(!despesaOpen))}
+          <div className={`sidebar-group ${despesaOpen ? 'open' : 'closed'}`}>
+            {link('despesas', 'Despesas', <FiTag size={18} />)}
+            {link('categoriadespesa', 'Categorias de Despesa', <FiTag size={18} />)}
+          </div>
+
+          {/* ── Financeiro ── */}
+          {sectionTitle('Financeiro', financeiroOpen, () => setFinanceiroOpen(!financeiroOpen))}
           <div className={`sidebar-group ${financeiroOpen ? 'open' : 'closed'}`}>
-            <a
-              className={`sidebar-link ${activeTab === 'contareceber' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('contareceber'); }}
-              href="#"
-            >
-              <FiDollarSign size={18} />
-              Contas a Receber
-            </a>
-            <a
-              className={`sidebar-link ${activeTab === 'contapagar' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('contapagar'); }}
-              href="#"
-            >
-              <FiDollarSign size={18} />
-              Contas a Pagar
-            </a>
+            {link('contareceber', 'Contas a Receber', <FiDollarSign size={18} />)}
+            {link('contapagar', 'Contas a Pagar', <FiDollarSign size={18} />)}
           </div>
 
-          <div
-            className={`sidebar-section-title ${servicosOpen ? 'open' : ''}`}
-            onClick={() => setServicosOpen(!servicosOpen)}
-            role="button"
-            aria-expanded={servicosOpen}
-          >
-            Serviços
-            <FiChevronDown size={14} className="chevron" />
-          </div>
-
+          {/* ── Serviços ── */}
+          {sectionTitle('Serviços', servicosOpen, () => setServicosOpen(!servicosOpen))}
           <div className={`sidebar-group ${servicosOpen ? 'open' : 'closed'}`}>
-            <a
-              className={`sidebar-link ${activeTab === 'registroservico' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('registroservico'); }}
-              href="#"
-            >
-              <FiBriefcase size={18} />
-              Registro de Serviços
-            </a>
+            {link('registroservico', 'Registro de Serviços', <FiBriefcase size={18} />)}
+            {link('ordemservico', 'Ordem de Serviço', <FiTool size={18} />)}
+          </div>
 
-            <a
-              className={`sidebar-link ${activeTab === 'ordemservico' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveTab('ordemservico'); }}
-              href="#"
-            >
-              <FiTool size={18} />
-              Ordem de Serviço
-            </a>
+          {/* ── Movimentações ── */}
+          {sectionTitle('Movimentações', movimentacoesOpen, () => setMovimentacoesOpen(!movimentacoesOpen))}
+          <div className={`sidebar-group ${movimentacoesOpen ? 'open' : 'closed'}`}>
+            {link('venda', 'Vendas', <FiShoppingCart size={18} />)}
+            {link('entradaestoque', 'Entrada de Estoque', <FiTrendingUp size={18} />)}
           </div>
         </nav>
 
         <div className="sidebar-footer">
           <div className="user-profile" onClick={handleLogout} title="Sair">
-            <div className="user-avatar">
-              U
-            </div>
+            <div className="user-avatar">U</div>
             <div className="user-info">
               <span className="user-name">{userName}</span>
               <span className="user-role">Administrador</span>
@@ -233,45 +158,21 @@ function Dashboard() {
       {/* Conteúdo Principal */}
       <main className="dashboard-content">
         <div className="content-wrapper" style={{ backgroundColor: activeTab === 'dashboard' ? 'var(--background)' : 'var(--white)' }}>
-          {activeTab === 'dashboard' && (
-            <DashboardHome userName={userName} onNavigate={setActiveTab} />
-          )}
-          {activeTab === 'clientes' && (
-            <Cliente />
-          )}
-          {activeTab === 'servicos' && (
-            <Servico />
-          )}
-          {activeTab === 'categoriaproduto' && (
-            <CategoriaProduto />
-          )}
-          {activeTab === 'produtos' && (
-            <Produto />
-          )}
-          {activeTab === 'ordemservico' && (
-            <OrdemServico />
-          )}
-          {activeTab === 'fornecedores' && (
-            <Fornecedor />
-          )}
-          {activeTab === 'despesas' && (
-            <Despesa />
-          )}
-          {activeTab === 'categoriadespesa' && (
-            <CategoriaDespesa />
-          )}
-          {activeTab === 'formapagamento' && (
-            <FormaPagamento />
-          )}
-          {activeTab === 'registroservico' && (
-            <RegistroServico />
-          )}
-          {activeTab === 'contapagar' && (
-            <ContaPagar />
-          )}
-          {activeTab === 'contareceber' && (
-            <ContaReceber />
-          )}
+          {activeTab === 'dashboard' && <DashboardHome userName={userName} onNavigate={setActiveTab} />}
+          {activeTab === 'clientes' && <Cliente />}
+          {activeTab === 'servicos' && <Servico />}
+          {activeTab === 'categoriaproduto' && <CategoriaProduto />}
+          {activeTab === 'produtos' && <Produto />}
+          {activeTab === 'ordemservico' && <OrdemServico />}
+          {activeTab === 'fornecedores' && <Fornecedor />}
+          {activeTab === 'despesas' && <Despesa />}
+          {activeTab === 'categoriadespesa' && <CategoriaDespesa />}
+          {activeTab === 'formapagamento' && <FormaPagamento />}
+          {activeTab === 'registroservico' && <RegistroServico />}
+          {activeTab === 'contapagar' && <ContaPagar />}
+          {activeTab === 'contareceber' && <ContaReceber />}
+          {activeTab === 'venda' && <Venda />}
+          {activeTab === 'entradaestoque' && <EntradaEstoque />}
         </div>
       </main>
     </div>
